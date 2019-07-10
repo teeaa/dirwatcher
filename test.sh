@@ -1,13 +1,15 @@
 #!/bin/bash
 
+mkdir /tmp/dirwatcher
+
 processes=()
 dirs=()
 
 for i in {1..10}
 do
-	dirs+=("/tmp/thirdlight/dir_$i")
-	mkdir /tmp/thirdlight/dir_$i
-	dirwatcher /tmp/thirdlight/dir_$i &
+	dirs+=("/tmp/dirwatcher/dir_$i")
+	mkdir /tmp/dirwatcher/dir_$i
+	dirwatcher /tmp/dirwatcher/dir_$i &
 	processes+=($!)
 done
 
@@ -49,3 +51,6 @@ for i in "${processes[@]}"
 do
 	kill -INT $i
 done
+
+rm -rf /tmp/dirwatcher
+echo "All cleaned up!"
