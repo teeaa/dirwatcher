@@ -1,0 +1,9 @@
+{
+	"Username": "guest",
+	"Password": "guest",
+	"Hostname": "localhost",
+	"Port": 25672,
+
+	"ExchangeName": "dirwatch",
+	"ExchangeType": "topic"
+}
