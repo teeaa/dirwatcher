@@ -9,7 +9,7 @@ for i in {1..10}
 do
 	dirs+=("/tmp/dirwatcher/dir_$i")
 	mkdir /tmp/dirwatcher/dir_$i
-	dirwatcher /tmp/dirwatcher/dir_$i &
+	./dirwatcher /tmp/dirwatcher/dir_$i &
 	processes+=($!)
 done
 
@@ -29,7 +29,7 @@ read -n 1
 
 for dir in "${dirs[@]}"
 do
-	for ext in {1..10}
+	for ext in {1..100}
 	do
 		if (($ext % 2)); then
 			echo "test" >> ${dir}/test.${ext}
@@ -37,7 +37,7 @@ do
 		# if (($ext % 3)); then
 		# 	mv ${dir}/test.${ext} ${dir}/test.${ext}.OLD
 		# fi
-		if (($ext % 7)); then
+		if (($ext % 3)); then
 			rm -f ${dir}/test.${ext}
 			# rm -f ${dir}/test.${ext}.OLD
 		fi
