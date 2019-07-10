@@ -1,12 +1,12 @@
 package main
 
 import (
+	"dirwatcher/internal/messaging"
 	"encoding/json"
 	"errors"
 	"os"
 	"path/filepath"
 	"strings"
-	"dirwatcher/internal/messaging"
 
 	"github.com/fsnotify/fsnotify"
 	log "github.com/sirupsen/logrus"

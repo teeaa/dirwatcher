@@ -1,9 +1,9 @@
 package main
 
 import (
+	"dirwatcher/internal/messaging"
 	"encoding/json"
 	"strings"
-	"dirwatcher/internal/messaging"
 )
 
 func connect() error {
