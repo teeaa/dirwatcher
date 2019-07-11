@@ -33,7 +33,6 @@ type rabbit struct {
 }
 
 func (c *rabbitMQConfig) getDsn() string {
-	// amqp://guest:guest@localhost:5672/
 	return "amqp://" + c.Username + ":" + c.Password + "@" + c.Hostname + ":" + strconv.Itoa(c.Port)
 }
 
@@ -79,7 +78,6 @@ func listen(routingKey string) (<-chan amqp.Delivery, error) {
 	err := r.ch.QueueBind(
 		r.q.Name,   // queue name
 		routingKey, // routing key
-		// "dirwatch", // exchange
 		r.config.ExchangeName,
 		false,
 		nil)
@@ -109,7 +107,6 @@ func listen(routingKey string) (<-chan amqp.Delivery, error) {
 func send(routingKey string, action string, filename string) error {
 	filename = stripPath(filename)
 	err := r.ch.Publish(
-		// "dirwatch", // exchange
 		r.config.ExchangeName,
 		routingKey, // routing key
 		false,      // mandatory
@@ -134,7 +131,6 @@ func send(routingKey string, action string, filename string) error {
 func connect() error {
 	log.Info("Connecting to RabbitMQ")
 	var err error
-	// r.conn, err = amqp.Dial("amqp://guest:guest@localhost:5672/")
 	r.conn, err = amqp.Dial(r.config.getDsn())
 	if err != nil {
 		log.Error("Failed to connect to RabbitMQ: ", err)
@@ -148,8 +144,6 @@ func connect() error {
 	}
 
 	err = r.ch.ExchangeDeclare(
-		// "dirwatch", // name
-		// "topic",    // type
 		r.config.ExchangeName,
 		r.config.ExchangeType,
 		true,  // durable

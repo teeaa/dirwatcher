@@ -19,7 +19,7 @@ func compare(str string, substr string) bool {
 	return strings.Contains(strings.ToLower(str), strings.ToLower(substr))
 }
 
-// Listener for watcher datas
+// Listener for watcher datas and client requests (FULL_LIST)
 func listen() error {
 	msgs, err := messaging.ServerListen()
 	if err != nil {
@@ -41,6 +41,7 @@ func listen() error {
 				case compare(d.Type, "REMOVE"), compare(d.Type, "RENAME"):
 					// Renaming a file causes it to be removed (removing shows up as rename)
 					// and created with the new filename in another event
+					// NOTE - under heavy load fsnotify starts missing both of the renaming related events!
 					rmFile(d.AppId, string(d.Body))
 				}
 			}
